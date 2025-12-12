@@ -111,7 +111,7 @@ class TetraWindow(Adw.ApplicationWindow):
             settings = webview.get_settings()
             settings.set_enable_developer_extras(True)
             settings.set_enable_javascript(True)
-            settings.set_enable_media_stream(False) # Disable camera/mic access to stop libcamera probing
+            settings.set_enable_media_stream(True) # Enable camera/mic access for voice features
             
             self.stack.add_named(webview, service["id"])
             
