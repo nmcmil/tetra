@@ -162,5 +162,7 @@ class TetraApp(Adw.Application):
         win.present()
 
 if __name__ == "__main__":
+    GLib.set_prgname("com.ubuntu.tetra")
+    GLib.set_application_name("Tetra")
     app = TetraApp()
     app.run(sys.argv)
