@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Tetra
+Comment=AI Wrapper
+Exec=tetra
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=Utility;Network;
+StartupNotify=true

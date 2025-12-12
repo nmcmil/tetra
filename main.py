@@ -68,12 +68,15 @@ class TetraWindow(Adw.ApplicationWindow):
         breakpoint.add_setter(self.split_view, "collapsed", True)
         self.add_breakpoint(breakpoint)
 
+        # Base path for assets
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+
         # Add Services
         self.services = [
-            {"id": "chatgpt", "name": "ChatGPT", "url": "https://chatgpt.com", "icon_file": "assets/chatgpt.png"},
-            {"id": "grok", "name": "Grok", "url": "https://x.com/i/grok", "icon_file": "assets/grok.png"},
-            {"id": "gemini", "name": "Gemini", "url": "https://gemini.google.com", "icon_file": "assets/gemini.png"},
-            {"id": "claude", "name": "Claude", "url": "https://claude.ai", "icon_file": "assets/claude.png"},
+            {"id": "chatgpt", "name": "ChatGPT", "url": "https://chatgpt.com", "icon_file": os.path.join(self.base_dir, "assets/chatgpt.png")},
+            {"id": "grok", "name": "Grok", "url": "https://x.com/i/grok", "icon_file": os.path.join(self.base_dir, "assets/grok.png")},
+            {"id": "gemini", "name": "Gemini", "url": "https://gemini.google.com", "icon_file": os.path.join(self.base_dir, "assets/gemini.png")},
+            {"id": "claude", "name": "Claude", "url": "https://claude.ai", "icon_file": os.path.join(self.base_dir, "assets/claude.png")},
         ]
 
 
@@ -145,8 +148,11 @@ class TetraApp(Adw.Application):
             win = TetraWindow(self)
         
         # Load CSS
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        css_path = os.path.join(base_dir, "style.css")
+        
         css_provider = Gtk.CssProvider()
-        css_provider.load_from_path("style.css")
+        css_provider.load_from_path(css_path)
         Gtk.StyleContext.add_provider_for_display(
             Gdk.Display.get_default(),
             css_provider,
