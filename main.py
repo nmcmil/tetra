@@ -1,11 +1,12 @@
 import sys
+import os
 import gi
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 gi.require_version('WebKit', '6.0')
 
-from gi.repository import Gtk, Adw, WebKit, Gio, Gdk
+from gi.repository import Gtk, Adw, WebKit, Gio, Gdk, GLib
 
 class TetraWindow(Adw.ApplicationWindow):
     def __init__(self, app):
@@ -76,6 +77,17 @@ class TetraWindow(Adw.ApplicationWindow):
         ]
 
 
+        # Persistence Setup
+        data_dir = os.path.join(GLib.get_user_data_dir(), "tetra")
+        cache_dir = os.path.join(GLib.get_user_cache_dir(), "tetra")
+        
+        # Ensure directories exist
+        os.makedirs(data_dir, exist_ok=True)
+        os.makedirs(cache_dir, exist_ok=True)
+        
+        # Create persistent session
+        self.network_session = WebKit.NetworkSession.new(data_dir, cache_dir)
+
         for service in self.services:
             # Add to Sidebar
             row = Gtk.ListBoxRow()
@@ -92,7 +104,8 @@ class TetraWindow(Adw.ApplicationWindow):
             self.list_box.append(row)
             
             # Add WebView to Stack
-            webview = WebKit.WebView()
+            # Share the persistent session across all views
+            webview = WebKit.WebView(network_session=self.network_session)
             webview.set_vexpand(True)
             webview.set_hexpand(True)
             settings = webview.get_settings()
