@@ -1,0 +1,37 @@
+/* Ubuntu Yaru-like styling adjustments */
+
+/* Global accent color */
+@define-color accent_color #E95420;
+@define-color accent_bg_color #E95420;
+@define-color accent_fg_color #ffffff;
+
+.navigation-sidebar {
+    background-color: @window_bg_color;
+    border-right: 1px solid @borders;
+}
+
+.sidebar-row {
+    padding: 10px 12px;
+    margin: 4px 8px;
+    border-radius: 6px;
+    transition: background-color 200ms;
+}
+
+.sidebar-row:hover {
+    background-color: alpha(@foreground, 0.05);
+}
+
+.sidebar-row:selected {
+    background-color: alpha(@accent_bg_color, 0.15);
+    color: @accent_color;
+    font-weight: bold;
+}
+
+.sidebar-label {
+    font-size: 14px;
+}
+
+headerbar {
+    background-color: @window_bg_color;
+    border-bottom: 1px solid @borders;
+}
