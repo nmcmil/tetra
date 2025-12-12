@@ -90,6 +90,11 @@ class TetraWindow(Adw.ApplicationWindow):
         
         # Create persistent session
         self.network_session = WebKit.NetworkSession.new(data_dir, cache_dir)
+        self.network_session.set_persistent_credential_storage_enabled(True)
+        self.network_session.set_itp_enabled(False) # Disable Intelligent Tracking Prevention to ensure cookies stick
+        
+        cookie_manager = self.network_session.get_cookie_manager()
+        cookie_manager.set_accept_policy(WebKit.CookieAcceptPolicy.ALWAYS)
 
         for service in self.services:
             # Add to Sidebar
